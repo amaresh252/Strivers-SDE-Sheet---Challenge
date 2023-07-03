@@ -1,0 +1,28 @@
+#include <bits/stdc++.h>
+
+pair<int,int> missingAndRepeating(vector<int> &arr, int n)
+{
+	long long sn=0,s2n=0,s=0,s2=0;
+	for(int i=0;i<n;i++){
+		s+=arr[i];
+		s2+=((long long)arr[i]*(long long)arr[i]);
+		sn+=(i+1);
+		s2n+=((i+1)*(i+1));
+	}
+	int diff1=s-sn;
+	int diff2=s2-s2n;
+	diff2=diff2/diff1;
+	long long val1=(diff1+diff2)/2;
+	long long val2=val1-diff1;
+	int cnt=0;
+        for (int i = 0; i < n; i++) {
+			if(val1==arr[i]) cnt++;
+        }
+		if(cnt==0){
+			return  {val1,val2};
+		}
+		return {val2,val1};
+
+
+	
+}
