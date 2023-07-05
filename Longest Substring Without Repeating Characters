@@ -1,0 +1,17 @@
+#include <bits/stdc++.h> 
+int uniqueSubstrings(string input)
+{
+    int left=0,right=0;
+    int cnt=0;
+    int n=input.size();
+    map<char,int> m;
+    while(right<n){
+        if(m.find(input[right])!=m.end()){
+            left=max(left,m[input[right]]+1);
+        }
+        m[input[right]]=right;
+        cnt=max(cnt,right-left+1);
+        right++;
+    }
+    return cnt;
+}
