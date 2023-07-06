@@ -1,0 +1,32 @@
+#include <bits/stdc++.h> 
+LinkedListNode<int> * Reverse(LinkedListNode<int> *head){
+    LinkedListNode<int> * d=NULL;
+   LinkedListNode<int> * curr;
+    LinkedListNode<int> *next;
+    while(head!=NULL){
+        next=head->next;
+        head->next=d;
+        d=head;
+        head=next;
+    }
+    return d;
+}
+bool isPalindrome(LinkedListNode<int> *head) {
+    if(!head) return true;
+    if(!head->next) return true;
+    LinkedListNode<int> *dummy=head;
+    LinkedListNode<int> *slow =head;
+    LinkedListNode<int> * fast=head;
+    while(fast->next!=NULL && fast->next->next!=NULL){
+        slow=slow->next;
+        fast=fast->next->next;
+    }
+    slow->next=Reverse(slow->next);
+slow=slow->next;
+    while(slow!=NULL){
+        if(slow->data!=head->data)return false;
+        slow=slow->next;
+        head=head->next;
+    }
+    return true;
+}
