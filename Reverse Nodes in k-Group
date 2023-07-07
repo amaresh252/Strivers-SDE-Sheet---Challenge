@@ -1,0 +1,36 @@
+#include <bits/stdc++.h>
+
+Node *getListAfterReverseOperation(Node *head, int n, int b[]){
+	Node * dummy=new Node(0);
+	Node * prev=dummy;
+	dummy->next=head;
+	if(!head || !head->next) return head;
+        Node * curr=head;
+		Node * nex=head;
+		int index=0;
+		int cnt=0;
+		while(nex){
+			nex=nex->next;
+			cnt++;
+		}
+	while(cnt>0 && index<n){
+		if(b[index]==0) {
+			index++;
+			continue;
+		}
+		curr=prev->next;
+		nex=curr->next;
+		
+		int k=min(b[index],cnt);
+		for(int i=1;i<k;i++){
+			curr->next=nex->next;
+			nex->next=prev->next;
+			prev->next=nex;
+			nex=curr->next;
+		}
+		cnt-=b[index];
+		prev=curr;
+		index++;
+	}
+	return dummy->next;
+}
