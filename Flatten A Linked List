@@ -1,0 +1,30 @@
+
+Node* merge(Node* a,Node* b){ 
+	Node* prev ;
+	Node* dummy=new Node(0);
+	prev=dummy;
+
+	while(a && b){
+		if(a->data<b->data){
+			prev->child=a;
+			prev=prev->child;
+			a=a->child;
+		}
+		else {
+			prev->child=b;
+			prev=prev->child;
+			b=b->child;
+		}
+	}
+	if(!a){prev->child=b;} else {prev->child=a;}
+	return dummy->child;
+}
+Node* flattenLinkedList(Node* head) 
+{       if( !head || !head->next ) return head;
+	Node* l2=flattenLinkedList(head->next);
+	head->next=NULL;
+	return merge(head,l2);
+	
+
+}
+
