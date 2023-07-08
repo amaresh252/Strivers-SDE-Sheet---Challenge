@@ -1,0 +1,27 @@
+long long getTrappedWater(long long* arr, int n) {
+
+    int left=0,right=n-1;
+    long long leftmost=0,rightmost=0,res=0;
+
+    while(left<right){
+        if(arr[left]<=arr[right]){
+            if(leftmost<arr[left]){
+                leftmost=arr[left];
+            }
+            else {
+                res+=(leftmost-arr[left]);
+            }
+            left++;
+        }
+        else  {
+            if(rightmost<arr[right]){
+                rightmost=arr[right];
+            }
+            else {
+                res+=(rightmost-arr[right]);
+            }
+            right--;
+        }
+    }
+    return res;
+}
