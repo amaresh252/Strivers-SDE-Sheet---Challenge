@@ -1,0 +1,26 @@
+#include <bits/stdc++.h> 
+bool comp(pair<int,int> p1,pair<int,int> p2){
+    return p1.first>p2.first;
+}
+int jobScheduling(vector<vector<int>> &jobs)
+{
+   vector<pair<int,int>> job;
+   int maxdeadline=0;
+   for(int i=0;i<jobs.size();i++){
+       job.push_back({jobs[i][1],jobs[i][0]});
+       maxdeadline=max(maxdeadline,jobs[i][0]);
+   }
+   sort(job.begin(),job.end(),comp);
+   int res=0;
+   vector<int> jobduration(maxdeadline+1,-1);
+   for(int i=0;i<job.size();i++){
+       int jobtime=job[i].second;
+       while(jobtime>0 && jobduration[jobtime]!=-1) jobtime--;
+       if(jobtime>0){
+           res+=job[i].first;
+           jobduration[jobtime]=jobtime;
+       }
+   }
+   return res;
+
+}
