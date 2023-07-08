@@ -1,0 +1,37 @@
+#include <bits/stdc++.h>
+
+LinkedListNode<int>* cloneRandomList(LinkedListNode<int> *head)
+{    if(!head) return head;
+    LinkedListNode<int>* curr=head;
+    LinkedListNode<int>* nex=NULL;
+    while (curr) {
+        nex=curr->next;
+        LinkedListNode<int>* t= new LinkedListNode<int>(curr->data);
+        t->random=NULL;
+        curr->next = t;
+        t->next = nex;
+        curr = nex;
+    }
+    curr=head;
+    while(curr){
+      if (curr->random)
+        curr->next->random = curr->random->next;
+        curr=curr->next->next;
+    }
+    curr=head;
+   
+     LinkedListNode<int>*  dummy=new LinkedListNode<int>(0);
+     LinkedListNode<int>* temp=dummy;
+     dummy->next=curr->next;
+     while(curr){
+         nex=curr->next->next;
+         temp->next=curr->next;
+         temp=temp->next;
+         curr->next=nex;
+         curr=nex;
+     }
+     return dummy->next; 
+    
+    
+}
+
