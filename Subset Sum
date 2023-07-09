@@ -1,0 +1,16 @@
+void allsum(int ind,vector<int> &num,vector<int> &ans,int sum){
+    if(ind==num.size()){
+        ans.push_back(sum);
+        return ;
+    }
+    allsum(ind+1,num,ans,sum+num[ind]);
+    allsum(ind+1,num,ans,sum);
+}
+
+vector<int> subsetSum(vector<int> &num){
+	vector<int> ans;
+    allsum(0,num,ans,0);
+    sort(ans.begin(),ans.end());
+    return ans;
+
+}
