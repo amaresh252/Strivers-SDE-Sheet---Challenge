@@ -1,0 +1,38 @@
+#include <bits/stdc++.h> 
+int row[4]={0,0,1,-1};
+int col[4]={1,-1,0,0};
+void add(vector<vector<int> > &maze,int n,vector<vector<int> >  &ans,vector<vector<int> >  &vis){
+  vector<int> temp;
+  for(int i=0;i<n;i++){
+    for(int j=0;j<n;j++){
+      if(vis[i][j]==1){
+        temp.push_back(maze[i][j]);
+      }
+      else temp.push_back(0);
+      
+    }
+    
+  }
+  ans.push_back(temp);
+}
+void Maze(int r,int c,vector<vector<int> > &maze, int n, vector<vector<int> >  &ans,vector<vector<int> >  &vis){
+       if(r==n-1  && c==n-1){
+         add(maze,n,ans,vis);
+         return ;
+       }
+       for(int  i=0;i<4;i++){
+         int x=r+row[i];
+         int y=c+col[i];
+         if(x>=0 && x<n && y>=0 && y<n  && vis[x][y]==0 && maze[x][y]==1){
+           vis[x][y]=1;
+           Maze(x,y,maze,n,ans,vis);
+           vis[x][y]=0;
+         }
+       }
+}
+vector<vector<int> > ratInAMaze(vector<vector<int> > &maze, int n){
+  vector<vector<int> >  ans,vis(n,vector<int> (n,0));
+  vis[0][0]=1;
+  Maze(0,0,maze,n,ans,vis);
+  return ans;
+}
