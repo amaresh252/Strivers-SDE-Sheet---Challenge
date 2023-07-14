@@ -1,0 +1,25 @@
+bool isvalid(int node,vector<vector<int>> &mat, int m, vector<int> &color){
+    for(int i=0;i<mat.size();i++){
+        if(node!=i && mat[node][i]==1){
+            if(color[i]==m) return false;
+        }
+    }
+    return true;
+}
+
+bool Coloring(int node,vector<vector<int>> &mat, int m, vector<int> &color){
+    if(node==color.size()) return true;
+    for(int i=1;i<=m;i++){
+        if(isvalid(node,mat,i,color)){
+            color[node]=i;
+           if(Coloring(node+1,mat,m,color)) return true;
+            color[node]=-1;
+        }
+    }
+    return false;
+}
+string graphColoring(vector<vector<int>> &mat, int m) {
+    vector<int> color(mat.size(),-1);
+    if(Coloring(0,mat,m,color)) return "YES";
+    return "NO";
+}
