@@ -1,0 +1,29 @@
+
+
+#include <bits/stdc++.h>
+
+void word(int  ind,string &s,vector<string> &ans,string &str,vector<string> &dictionary){
+  if(ind==s.size()){
+      ans.push_back(str);
+      return ;
+  }
+
+    for(int i=ind;i<s.size();i++){
+
+        if(find(dictionary.begin(),dictionary.end(),s.substr(ind,(i-ind+1)))!=dictionary.end()){
+            int n=str.size();
+            str=str+s.substr(ind,i-ind+1)+' ';
+            word(i+1,s,ans,str,dictionary);
+            str.erase(n);
+        }
+    }
+}
+
+vector<string> wordBreak(string &s, vector<string> &dictionary)
+{
+    vector<string> ans;
+    string str;
+    word(0,s,ans,str,dictionary);
+    return ans;
+
+}
