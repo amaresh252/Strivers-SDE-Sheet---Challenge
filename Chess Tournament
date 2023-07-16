@@ -1,0 +1,27 @@
+#include <bits/stdc++.h> 
+bool Tournament(int mid,vector<int> &positions,int n,int c){
+	int cnt=1,last=positions[0];
+	for(int  i=1;i<n;i++){
+		if(positions[i]-last>=mid){
+			cnt++;
+			last=positions[i];
+		}
+	}
+	if(cnt>=c) return true;
+	return false;
+}
+int chessTournament(vector<int> positions , int n ,  int c){
+	sort(positions.begin(),positions.end());
+	int low=1,high=1e9,mid,res=-1;
+	while(low<=high){
+		mid=(low+high)>>1;
+		if(Tournament(mid,positions,n,c)){
+			res=mid;
+			low=mid+1;
+		}
+		else  {
+			high=mid-1;
+		}
+	}
+	return res;
+}
