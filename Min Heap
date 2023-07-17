@@ -1,0 +1,50 @@
+#include <bits/stdc++.h>
+void heapify(int index,vector<int> &minheap) {
+    int small=index;
+    int n=minheap.size();
+    int left=2*index+1;
+    int right=2*index+2;
+    if(left<n && minheap[left]<minheap[small]){
+        small=left;
+    }
+    if(right<n && minheap[right]<minheap[small]){
+        small=right;
+    }
+    if(index!=small){
+        swap(minheap[index],minheap[small]);
+        heapify(small, minheap);
+    }
+}
+void insert(vector<int> &minheap,int ele){
+    minheap.push_back(ele);
+    int index=minheap.size()-1;
+    int parent=(index-1)/2;
+    while(minheap[parent]>minheap[index]){
+        
+        heapify(parent,minheap);
+        index=parent;
+        parent=(index-1)/2;
+    }
+
+}
+void deletee(vector<int> &minheap,vector<int> &ans){
+    if(minheap.size()==0) return ;
+    int size=minheap.size();
+    ans.push_back(minheap[0]);
+    minheap[0]=minheap[size-1];
+
+    minheap.pop_back();
+    heapify(0,minheap);
+}
+vector<int> minHeap(int n, vector<vector<int>>& q) {
+    vector<int> ans,minheap;
+    for(int i=0;i<n;i++){
+        if(q[i][0]==0){
+            insert(minheap,q[i][1]);
+        }
+        else {
+            deletee(minheap,ans);
+        }
+    }
+    return ans;
+}
