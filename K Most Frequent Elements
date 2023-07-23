@@ -1,0 +1,16 @@
+vector<int> KMostFrequent(int n, int k, vector<int> &arr)
+{vector<int> ans;
+    typedef pair<int,int> pi;
+    map<int,int> m;
+    for(int i=0;i<n;i++)m[arr[i]]++;
+    priority_queue<pi> pq;
+    for(auto it:m){
+        pq.push({it.second,it.first});
+    }
+    for(int i=0;i<k;i++){
+        ans.push_back(pq.top().second);
+        pq.pop();
+    }
+    return ans;
+
+}
