@@ -1,0 +1,32 @@
+#include<bits/stdc++.h>
+
+bool isGraphBirpatite(vector<vector<int>> &edges) {
+	int n=edges.size();
+	vector<int> vis(n,-1);
+	vector<vector<int>> adj(n);
+	for(int i=0;i<n;i++){
+		for(int j=0;j<edges[i].size();j++){
+			if(edges[i][j]==1){
+				adj[i].push_back(j);
+				adj[j].push_back(i);
+			}
+		}
+	}
+	queue<pair<int,int>> q;
+	q.push({0,0});
+	vis[0]=0;
+	while(!q.empty()){
+		int node=q.front().first;
+		int  par=q.front().second;
+		q.pop();
+		for(auto it:adj[node]){
+			if(vis[it]==par) return false;
+			if(vis[it]==-1){
+				q.push({it,abs(1-par)});
+				vis[it]=abs(1-par);
+			}
+		}
+	}
+	return true;
+
+}
