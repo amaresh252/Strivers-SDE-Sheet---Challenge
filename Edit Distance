@@ -1,0 +1,29 @@
+#include<bits/stdc++.h>
+
+int lcsUtil(string& s1, string& s2, int ind1, int ind2,  vector<vector<int>>& dp){
+     if(ind1<0) return ind2+1;
+     if(ind2<0) return ind1+1;
+    
+    if(dp[ind1][ind2]!=-1)
+        return dp[ind1][ind2];
+      int match=INT_MAX;
+    if (s1[ind1] == s2[ind2]) {
+    return dp[ind1][ind2]= lcsUtil(s1, s2, ind1 - 1, ind2 - 1, dp);
+    }
+    return dp[ind1][ind2]=min( 1+lcsUtil(s1, s2, ind1, ind2 - 1, dp),min(1+lcsUtil(s1, s2, ind1 - 1, ind2 - 1, dp), 1+lcsUtil(s1, s2, ind1 - 1, ind2, dp)));
+ 
+    
+   
+}
+
+
+
+int editDistance(string s1, string s2)
+{
+     int n=s1.size();
+    int m=s2.size();
+
+    vector<vector<int>> dp(n,vector<int>(m,-1));
+   return lcsUtil(s1,s2,n-1,m-1,dp);
+   
+}
