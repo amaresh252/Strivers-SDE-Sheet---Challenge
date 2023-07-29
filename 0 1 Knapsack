@@ -1,0 +1,19 @@
+#include<bits/stdc++.h>
+
+
+int Profit(int ind,vector<int> &values, vector<int> &weights, int n, int w,vector<vector<int>> &dp){
+	if(w<0 || ind<0) return 0;
+	if(dp[ind][w]!=-1) return dp[ind][w];
+	int take=0,notake=0;
+	if(w>=weights[ind]){
+		take=values[ind]+Profit(ind-1,values,weights,n,w-weights[ind],dp);
+	}
+	notake=Profit(ind-1,values,weights,n,w,dp);
+	return dp[ind][w]=max(take,notake);
+}
+
+int maxProfit(vector<int> &values, vector<int> &weights, int n, int w)
+{
+	vector<vector<int>> dp(n,vector<int> (w+1,-1));
+	return Profit(n-1,values,weights,n,w,dp);
+}
