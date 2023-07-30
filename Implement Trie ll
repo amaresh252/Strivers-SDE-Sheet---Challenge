@@ -1,0 +1,86 @@
+#include <bits/stdc++.h> 
+
+struct Node {
+    Node *list[26];
+    int cntend=0;
+    int prefix=0;
+   bool iscontainchar(char ch){
+        return (list[ch-'a']!=NULL);
+    }
+   void put(char ch,Node *node){
+       list[ch-'a']=node;
+   }
+   Node* get(char ch){
+       return list[ch-'a'];
+   }
+   void increaseEnd(){
+       cntend++;
+   }
+   int countEnd(){
+       return cntend;
+   }
+   void increasePrefix(){
+       prefix++;
+   }
+   int countprefix(){
+       return prefix;
+   }
+   void decreaseprefix(){
+       prefix--;
+   }
+   void decreaseEnd(){
+       cntend--;
+   }
+};
+
+class Trie{
+
+    public:
+ Node *root;
+    Trie(){
+        root=new Node();
+    }
+
+    void insert(string &word){
+         Node *node=root;
+        for(int i=0;i<word.size();i++){
+            if(!node->iscontainchar(word[i])){
+                node->put(word[i],new Node());
+            }
+            node=node->get(word[i]);
+            node->increasePrefix();
+        }
+        node->increaseEnd();
+    }
+
+    int countWordsEqualTo(string &word){
+        Node *node=root;
+        for(int i=0;i<word.size();i++){
+            if(node->iscontainchar(word[i])){
+                node=node->get(word[i]);
+            }
+            else  return  0;
+        }
+        return node->countEnd();
+    }
+
+    int countWordsStartingWith(string &word){
+        Node *node=root;
+        for(int i=0;i<word.size();i++){
+            if(node->iscontainchar(word[i])){
+                node=node->get(word[i]);
+            }
+            else return 0;
+        }
+        return node->countprefix();
+    }
+
+    void erase(string &word){
+        Node *node=root;
+        for(int i=0;i<word.size();i++){
+            node=node->get(word[i]);
+            node->decreaseprefix();
+        }
+        node->decreaseEnd();
+    }
+};
