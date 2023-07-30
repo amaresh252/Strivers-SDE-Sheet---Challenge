@@ -1,0 +1,80 @@
+#include <bits/stdc++.h> 
+
+struct Node{
+    Node* list[26];
+    int cntword=0;
+    bool iscontainchar(char ch){
+        return (list[ch-'a']!=NULL);
+    }
+    void put(char ch,Node* node){
+        list[ch-'a']=node;
+    }
+    Node* get(char ch){
+        return list[ch-'a'];
+    }
+    void increasecount(){
+        cntword++;
+    }
+    bool checkword(){
+        return cntword;
+    }
+};
+
+class Trie {
+
+public:
+Node *root;
+    Trie() {
+        root=new Node();
+    }
+
+    void insert(string word) {
+        Node* node=root;
+        for(int i=0;i<word.size();i++){
+            if(!node->iscontainchar(word[i])){
+                node->put(word[i],new Node());
+            }
+            node=node->get(word[i]);
+        }
+        node->increasecount();
+    }
+
+    bool searchword(string word) {
+        Node* node=root;
+         for(int i=0;i<word.size();i++){
+            if(!node->iscontainchar(word[i])){
+                return false;
+            } 
+            node=node->get(word[i]);
+        }
+        return node->checkword();
+    }
+};
+string completeString(int n, vector<string> &a){
+    string ans="";
+    Trie trie;
+    for(int i=0;i<a.size();i++){
+        trie.insert(a[i]);
+    }
+    for(int i=0;i<a.size();i++){
+        string s="";
+        int flag=0;
+        for(int j=0;j<a[i].size();j++){
+            s+=a[i][j];
+            if(!trie.searchword(s)) {
+                flag++;
+                break;
+            }
+        }
+        if(flag==1) continue;
+        if(ans.size()<a[i].size()){
+            ans=a[i];
+        }
+        else {
+        if(ans.size()==a[i].size() && a[i]<ans) ans=a[i];
+        }
+       
+    }
+    if(ans=="") return "None";
+    return ans;
+}
