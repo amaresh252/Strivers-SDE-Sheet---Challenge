@@ -1,0 +1,24 @@
+#include <bits/stdc++.h> 
+
+bool ispresent(vector < string > & arr,string s){
+   if(find(arr.begin(),arr.end(),s)==arr.end()) return false;
+   return true;
+}
+int cut(int i,vector < string > & arr,string & target, vector<int> &dp,int n,int m){
+    if(i==m) return 1;
+    if(dp[i]!=-1) return dp[i];
+   
+    int mini=0;
+    for(int k=i;k<m;k++){
+        if(ispresent(arr,target.substr(i,k-i+1)))
+        mini=cut(k+1,arr,target,dp,n,m);
+        if(mini==1) return 1;
+    }
+    return dp[i]=mini;
+
+}
+bool wordBreak(vector < string > & arr, int n, string & target) {
+  int  m=target.size();
+       vector<int> dp(m,-1);
+       return cut(0,arr,target,dp,n,m);
+}
