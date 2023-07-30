@@ -1,0 +1,81 @@
+/*
+    Your Trie object will be instantiated and called as such:
+    Trie* obj = new Trie();
+    obj->insert(word);
+    bool check2 = obj->search(word);
+    bool check3 = obj->startsWith(prefix);
+ */
+struct Node {
+    Node *list[26];
+    int cntend=0;
+    int prefix=0;
+   bool iscontainchar(char ch){
+        return (list[ch-'a']!=NULL);
+    }
+   void put(char ch,Node *node){
+       list[ch-'a']=node;
+   }
+   Node* get(char ch){
+       return list[ch-'a'];
+   }
+   void increaseEnd(){
+       cntend++;
+   }
+   bool checkEnd(){
+       return cntend;
+   }
+   void increasePrefix(){
+       prefix++;
+   }
+   bool checkprefix(){
+       return prefix;
+   }
+};
+
+class Trie {
+
+public:
+
+    Node *root;
+
+    Trie() {
+        root=new Node();
+    }
+
+    
+    void insert(string word) {
+        Node *node=root;
+        for(int i=0;i<word.size();i++){
+            if(!node->iscontainchar(word[i])){
+                node->put(word[i],new Node());
+            }
+            node=node->get(word[i]);
+            node->increasePrefix();
+        }
+        node->increaseEnd();
+    }
+
+    
+    bool search(string word) {
+         Node *node=root;
+        for(int i=0;i<word.size();i++){
+            if(node->iscontainchar(word[i])){
+                node=node->get(word[i]);
+            }
+            else  return  false;
+        }
+        return node->checkEnd();
+    }
+
+    /** Returns if there is any word in the trie that starts with the given prefix. */
+    bool startsWith(string prefix) {
+         Node *node=root;
+        for(int i=0;i<prefix.size();i++){
+            if(node->iscontainchar(prefix[i])){
+                node=node->get(prefix[i]);
+            }
+            else return false;
+        }
+        return node->checkprefix();
+    }
+};
