@@ -1,0 +1,20 @@
+#include<bits/stdc++.h>
+long ToMakeChange(int ind,int *denominations, int n, int value,vector<vector<long>> &dp) {
+ if(value==0) return 1;
+ if(ind<0) return 0;
+ 
+  if(dp[ind][value]!=-1) return dp[ind][value];
+  long take=0,notake=0;
+  if(value>=denominations[ind]){
+     take=ToMakeChange(ind,denominations,n,value-denominations[ind],dp); 
+  }
+  notake=ToMakeChange(ind-1,denominations,n,value,dp);
+  return dp[ind][value]=take+notake;
+}
+
+
+long countWaysToMakeChange(int *denominations, int n, int value)
+{ vector<vector<long>> dp(n,vector<long>(value+1,-1));
+  return ToMakeChange(n-1,denominations,n,value,dp);
+
+}
