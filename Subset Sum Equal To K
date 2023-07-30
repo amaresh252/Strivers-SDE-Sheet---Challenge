@@ -1,0 +1,24 @@
+#include <bits/stdc++.h> 
+
+int sumtok(int ind,vector<int> &arr, int n, int k,vector<vector<int>> &dp) {
+ if(k==0) return 1;
+ if(ind<0) return 0;
+ 
+  if(dp[ind][k]!=-1) return dp[ind][k];
+  int take=0,notake=0;
+  if(k>=arr[ind]){
+     take=sumtok(ind-1,arr,n,k-arr[ind],dp); 
+  }
+  if(take==1 || notake==1){
+      return dp[ind][k]=1;
+  }
+  notake=sumtok(ind-1,arr,n,k,dp);
+  if(take==1 || notake==1){
+      return dp[ind][k]=1;
+  }
+  return dp[ind][k]=0;
+}
+bool subsetSumToK(int n, int k, vector<int> &arr) {
+    vector<vector<int>> dp(n,vector<int>(k+1,-1));
+  return sumtok(n-1,arr,n,k,dp);
+}
