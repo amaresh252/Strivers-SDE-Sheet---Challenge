@@ -1,0 +1,17 @@
+#include<bits/stdc++.h>
+int Rod(int ind,vector<int> &price, int n,vector<vector<int>> &dp){
+	
+	if(ind==0) return price[0]*n;
+	if(dp[ind][n]!=-1) return dp[ind][n];
+	int take=0,notake=0;
+	if(n>=(ind+1)){
+		take=price[ind]+Rod(ind,price,n-(ind+1),dp);
+	}
+	notake=Rod(ind-1,price,n,dp);
+	return dp[ind][n]=max(take,notake);
+}
+int cutRod(vector<int> &price, int n)
+{
+	vector<vector<int>> dp(price.size(),vector<int>(n+1,-1));
+	return Rod(n-1,price,n,dp);
+}
