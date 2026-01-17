@@ -24,6 +24,7 @@ interface A{ a:string}
 interface B{ b:string}
 interface C extends A,B{  }  // here interface can get extend
 
+#Generic
 function wrappInArray<T>(iterm:T):T[]{  return [item]  }   wrappInArray({})  wrappInArray("chai")  // anything we could pass
 
 function Pair<A,B>(a:A,b:B):[A,B]{  return [a,b] }  Pair("masala",20)
