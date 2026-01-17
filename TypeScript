@@ -34,6 +34,7 @@ interface ApiPromise<T>  { status:number , data:T }
 const res:ApiPromise<{falvor:string}>={  status:"success", data:{ flavor:"masala" } }
 
 .d.ts is declaration file from this all suggesstion comming
+for any package which declaration not able to find (means suggesstion)  then all install like @types/package-name use your package name here
 
 
 
