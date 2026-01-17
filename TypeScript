@@ -1,0 +1,28 @@
+Interface DiscountCalculator {
+(price:number):number
+}
+const discount:DiscountCalculator=(p)=>p.0.5
+
+interface TechMachine{
+start():void
+stop():void
+}
+
+interface rating {
+[name:string]:number
+}
+const chaiRating:rating{
+masala:4.5
+ginger:3.4
+}
+
+interface user{ name:string }
+interface user{ password:string }
+// if defining two interface saperetly then it's automatic get combine make work as single  now if declare typr user then both name and password must required.
+
+interface A{ a:string}
+interface B{ b:string}
+interface C extends A,B{  }  // here interface can get extend
+
+
+
